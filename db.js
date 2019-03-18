@@ -1,12 +1,8 @@
-const fastifyPlugin = require('fastify-plugin')
+'use strict';
+
+
 const mongoose = require('mongoose');
 
-async function dbConnector (fastify, options) {
-  const url = options.url
-  delete options.url
-
-  const db = await mongoose.connect(url, options)
-  fastify.decorate('mongoose', db)
-}
-
-module.exports = fastifyPlugin(dbConnector)
+mongoose.connect(url, options, (err) => {
+  console.log(JSON.stringify(`Error connect: ${err}`, null, 2));
+});

@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
 var client = mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    //_id: mongoose.Schema.Types.ObjectId,
     name: {
-            fname: String,
+        fname: String,
         lname: String,
         name: String
     },
@@ -14,11 +14,11 @@ var client = mongoose.Schema({
     IsOnline: Boolean,
     email: String,
     date: Date,
-    rating:  Number,
+    rating: Number,
     avatar: String,
     adress: String,
     account: String,
-    orderAmount:  Number
+    orderAmount: Number
 });
 
 var Client = mongoose.model('clients', client);
