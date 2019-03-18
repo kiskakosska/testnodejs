@@ -21,7 +21,6 @@ var client = mongoose.Schema({
     orderAmount:  Number
 });
 
-
 var Client = mongoose.model('clients', client);
- 
+
 module.exports = Client;

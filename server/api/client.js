@@ -1,9 +1,10 @@
 'use strict'
 
-async function routes (fastify,  options) {
+async function routes (fastify, options) {
+ 
+  let Client = require('../../database/client')
 
-  var Clients = require('../../database/client');
-
+  
   fastify.get('/clients', async (request, reply) => {
     const result = collection.find().toArray(function(err, results){
       if (results === null) {
@@ -59,5 +60,5 @@ fastify.post('/clients', {schema} , async (request, reply) => {
 
 }
 
-export default routes
+module.exports = routes
 
