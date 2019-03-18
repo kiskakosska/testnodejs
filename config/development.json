@@ -1,0 +1,13 @@
+{
+  "Config": {
+    "Server": {
+      "name": "Test",
+      "port": 9000
+    }
+  },
+  "DbConfig": {
+    "port": 27017,
+    "host": "localhost",
+    "dbname": ""
+  }
+}
