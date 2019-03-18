@@ -16,15 +16,7 @@ fastify.listen(443, '::', (err, address) => {
   }
 })
 
-// Валидатор
-const Ajv = require('ajv')
-const ajv = new Ajv({
-  removeAdditional: true,
-  useDefaults: true,
-  coerceTypes: true,
-  allErrors: true
-});
-fastify.setSchemaCompiler((schema) => { return ajv.compile(schema) });
+require('./config/validator')(fastify);
 
 //MongoDB подключение форсится без отключения монги
 const mongoose = require('mongoose');
@@ -35,44 +27,24 @@ mongoose.connect('mongodb+srv://vadimw:Djkrdjkr16@cluster0-gakmc.mongodb.net/tes
 });
 
 
-fastify.register(require('./server/api/client'))
-//fastify.register(require('./server/api/open'))
-
-
-// Ошибки fastify
-fastify.setErrorHandler((err, req, res) => {
-  log.error({ err }, 'fastify errorHandler')
-
-  //Ошибка валидации данных запроса
-  if (err.validation) {
-    return res.send({ error: 'Ошибка валидации данных запроса' });
-  } else {
-    return res.send({ error: 'Ошибка errorHandler' });
-  }
-})
-
 // Статические файлы
 fastify.register(require('fastify-static'), {
   root: path.join(__dirname, './public')
-})
+});
 
+//!! вторая ошибка. не регистрируются куки. ps: это не ошибка, у него нет callback-функции, второй параметр - опшены
 // Куки
-fastify.register(require('fastify-cookie'), err => {
-  if (err) log.error({ err }, 'fastify-cookie')
-})
+fastify.register(require('fastify-cookie'));
 
 fastify.setNotFoundHandler((req, res) => {
   res.sendFile('index.html')
-})
-
+});
 
 
 fastify.register(
   async openRoutes => {
     // Пути доступные всем
     openRoutes.register(require('./server/api/client'))
-
-
   },
   { prefix: '/api' } // префикс всех путей
-)
+);
