@@ -1,0 +1,8 @@
+/node_modules/
+
+/logs/*
+# exception to the rule
+!logs/.gitkeep 
+
+/public/react_bundle.js
+/public/isProd.js
