@@ -1,5 +1,5 @@
-const fastifyPlugin = require('fastify-plugin')
-async function client (fastify, options) {
+var mongoose = require('mongoose');
+
 var client = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name: {
@@ -20,7 +20,8 @@ var client = mongoose.Schema({
     account: String,
     orderAmount:  Number
 });
-fastify.decorate('mongoose', client)
-}
 
-module.exports = fastifyPlugin(client)
+
+var Client = mongoose.model('clients', client);
+ 
+module.exports = Client;

@@ -1,10 +1,9 @@
 'use strict'
 
-async function routes (fastify, options) {
-  const database = fastify.mongoose.db('db')
-  const collection = database.collection('clients')
+async function routes (fastify,  options) {
 
-  
+  var Clients = require('../../database/client');
+
   fastify.get('/clients', async (request, reply) => {
     const result = collection.find().toArray(function(err, results){
       if (results === null) {
@@ -60,5 +59,5 @@ fastify.post('/clients', {schema} , async (request, reply) => {
 
 }
 
-module.exports = routes
+export default routes
 

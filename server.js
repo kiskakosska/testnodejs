@@ -86,7 +86,6 @@ fastify.register(require('./db'), {
   url: 'mongodb+srv://vadimw:Djkrdjkr16@cluster0-gakmc.mongodb.net/test?retryWrites=true'
 })
 
-
 fastify.register(require('./server/api/client'))
 //fastify.register(require('./server/api/open'))
 
