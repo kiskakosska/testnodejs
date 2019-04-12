@@ -1,5 +1,7 @@
 'use strict'
 
+const executorValidators = require('../_validators/executor');
+
 async function routes (fastify, options) {
   const database = fastify.mongo.db('db')
   const collection = database.collection('executor')
@@ -28,45 +30,15 @@ fastify.get('/executor/:id', async (request, reply) => {
       )
 })
 
-
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     name: { type: 'string' },
-     fname: { type: 'string' },
-     lname: { type: 'string' },
-     number: { type: 'number' },
-     login: { type: 'string' },
-     password: { type: 'string' },
-     isActive: { type: 'boolean' },
-     IsOnline: { type: 'boolean' },
-     email: { type: 'string' },
-     date: { type: 'number' },
-     rating: { type: 'number' },
-     avatar: { type: 'string' },
-     adress: { type: 'string' },
-     account: { type: 'number' },
-     orderAmount: { type: 'number' },
-     freeclick: { type: 'number'},
-     idtarif: { type: "number"}
-    },
-    required: ['name'],
-    required: ['fname'],
-    required: ['lname'],
-    required: ['number'],
-    required: ['login'],
-    required: ['email'],
-    required: ['adress']
-  }
-});
-
-
-fastify.post('/executor', {schema} , async (request, reply) => {
+fastify.post('/executor', { schema: executorValidators.addSchema } , async (request, reply) => {
   let executor = await collection.insertOne(request.body);
   reply.send(executor);
 });
 
+fastify.put('/executor/:id', { schema: executorValidators.addSchema } , async (request, reply) => {
+  let executor = await collection.insertOne(request.body);
+  reply.send(executor);
+});
 }
 
 

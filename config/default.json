@@ -1,0 +1,11 @@
+{
+  
+    "Customer": {
+      "dbConfig": {
+        "host": "cluster0-gakmc.mongodb.net",
+        "port": 27017,
+        "dbName": "db"
+      }
+    }
+  
+}

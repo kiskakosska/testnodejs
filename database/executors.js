@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 
-var client = mongoose.Schema({
+var executors = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     id: Number,
-    client: {
+    executors: {
         dname: String,
         fname: String,
         lname: String,
@@ -20,6 +20,7 @@ var client = mongoose.Schema({
         type: Date,
         default: Date.now
     },
+    public: Boolean,
     schet: 
     {
         numbersch: Number,
@@ -27,19 +28,22 @@ var client = mongoose.Schema({
         nCard: Number,
         nWM: Number
     },
-    public: Boolean,
     blocked: Boolean,
     timeblock: Date,
     timeblocknow: Date,
     orderAmount: Number,
     timeout: Date,
-    diapazon: 
-    {
-        amountmin: Number,
-        amountmax: Number
-    }
+    services: 
+    [{
+        id: Number,
+        name: String
+    }],
+    tarifid: Number,
+    freeclick: Number,
+    price: Number
+    
 });
 
-var Client = mongoose.model('clients', client);
+var Executors = mongoose.model('executors', executors);
 
-module.exports = Client;
+module.exports = Executors;

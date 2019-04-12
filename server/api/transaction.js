@@ -28,22 +28,6 @@ fastify.get('/transaction/:id', async (request, reply) => {
       )
 })
 
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     comission: { type: 'string' },
-     parametres: { type: 'string' },
-     time: { type: 'number' },
-     ip: { type: 'number' },
-     type: { type: 'string' },
-     in: { type: 'string' },
-     out: { type: 'string' }
-    },
-  }
-});
-
-
 fastify.post('/transaction', {schema} , async (request, reply) => {
   let transaction = await collection.insertOne(request.body);
   reply.send(transaction);

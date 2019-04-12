@@ -3,13 +3,7 @@ const isProd = require('./public/isProd'),
   log = require('./server/logger'),
   path = require('path')
 
-// Ошибки среды node.js, чтобы приложение никогда не падало
-process.on('unhandledRejection', (reason, promise) => {
-  log.error({ reason, promise }, 'серверный процесс unhandledRejection')
-})
-process.on('uncaughtException', err => {
-  log.error({ err }, 'серверный процесс uncaughtException')
-})
+  require('./errorHandlers');
 
 // Redirect server from http port 80 to https 443
 const fastifyHttp = require('fastify')({
@@ -69,44 +63,17 @@ fastify.listen(443, '::', (err, address) => {
   }
 })
 
-// Валидатор
-const Ajv = require('ajv')
-const ajv = new Ajv({
-  removeAdditional: true,
-  useDefaults: true,
-  coerceTypes: true,
-  allErrors: true
-})
-fastify.setSchemaCompiler(function (schema) {
-  return ajv.compile(schema)
-})
 
-//MongoDB подключение форсится без отключения монги
-fastify.register(require('./db'), {
-  url: 'mongodb+srv://vadimw:Djkrdjkr16@cluster0-gakmc.mongodb.net/test?retryWrites=true'
-})
+require('./config/validator')(fastify);
+
+const mongoose = require('mongoose');
+mongoose.connect('mongodb+srv://katya1995:katya1995@cluster0-tzvo3.mongodb.net/test?retryWrites=true', { useNewUrlParser: true }, (err) => {
+  console.log(JSON.stringify(`Error connect: ${err}`, null, 2));
+});
+
 
 fastify.register(require('./server/api/client'))
-//fastify.register(require('./server/api/open'))
 
-
-// Ошибки fastify
-fastify.setErrorHandler((err, req, res) => {
-  console.log(res)
-  log.error({ err, req }, 'fastify errorHandler')
-   
-//Ошибка валидации данных запроса
-  if (err.validation) {
-    return res.send({
-      error: 'Ошибка валидации данных запроса'
-    })
-  } else {
-    return res.send({
-      error:
-        'Ошибка errorHandler'
-    })
-  }
-})
 
 // Статические файлы
 fastify.register(require('fastify-static'), {

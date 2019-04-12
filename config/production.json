@@ -1,0 +1,13 @@
+{
+  "Config": {
+    "Server": {
+      "name": "Test",
+      "port": 80
+    }
+  },
+  "DbConfig": {
+    "port": 27017,
+    "host": "cluster0-gakmc.mongodb.net",
+    "dbname": "db"
+  }
+}

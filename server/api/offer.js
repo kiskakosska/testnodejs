@@ -28,18 +28,6 @@ fastify.get('/offers/:id', async (request, reply) => {
       )
 })
 
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     status: { type: 'string' },
-     time: { type: 'string' },
-     price: { type: 'number' },
-     ip: { type: 'number' },
-     geo: { type: 'number' }
-    },
-  }
-});
 
 
 fastify.post('/offers', {schema} , async (request, reply) => {

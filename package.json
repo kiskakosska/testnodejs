@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "testnodejs",
   "version": "1.0.0",
   "description": "OmNomNom",
   "main": "server.js",
@@ -13,6 +13,7 @@
     "ajv": "^6.8.1",
     "babel-loader": "^8.0.5",
     "babel-plugin-styled-components": "^1.10.0",
+    "config": "^3.0.1",
     "css-loader": "^2.1.0",
     "fastify": "^2.0.0-rc.6",
     "fastify-cookie": "^2.1.6",
@@ -32,5 +33,19 @@
     "webpack": "^4.29.3",
     "webpack-bundle-analyzer": "^3.0.3",
     "webpack-cli": "^3.2.3"
-  }
+  },
+  "scripts": {
+    "start": "cross-env NODE_ENV=development node server.js"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kiskakosska/testnodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kiskakosska/testnodejs/issues"
+  },
+  "homepage": "https://github.com/kiskakosska/testnodejs#readme"
 }

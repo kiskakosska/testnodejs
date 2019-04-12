@@ -28,20 +28,6 @@ fastify.get('/service/:id', async (request, reply) => {
       )
 })
 
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     name: { type: 'string' },
-     price: { type: 'number' },
-     description: { type: 'string' },
-     comment: { type: 'string' }
-    },
-    required: ['name'],
-    required: ['description']
-  }
-});
-
 
 fastify.post('/service', {schema} , async (request, reply) => {
   let service = await collection.insertOne(request.body);

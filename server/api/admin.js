@@ -1,12 +1,14 @@
 'use strict'
 
+const adminValidators = require('../_validators/admin');
+
 async function routes (fastify, options) {
   const database = fastify.mongo.db('db')
   const collection = database.collection('admin')
 
   
   fastify.get('/admin', async (request, reply) => {
-    const result = collection.find().toArray(function(err, results){
+    const result = collection.find(function(err, results){
       if (results === null) {
         throw new Error('Invalid value')
       }
@@ -28,43 +30,17 @@ fastify.get('/admin/:id', async (request, reply) => {
       )
 })
 
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     name: { type: 'string' },
-     fname: { type: 'string' },
-     lname: { type: 'string' },
-     number: { type: 'number' },
-     login: { type: 'string' },
-     password: { type: 'string' },
-     isActive: { type: 'boolean' },
-     IsOnline: { type: 'boolean' },
-     email: { type: 'string' },
-     rules: { type: 'string' },
-     date: { type: 'number' }
-    
-    },
-    required: ['name'],
-    required: ['fname'],
-    required: ['lname'],
-    required: ['number'],
-    required: ['login'],
-    required: ['email']
-  }
+fastify.post('/admin', { schema: adminValidators.addSchema } , async (request, reply) => {
+  let admin = await collection.insertOne(request.body);
+  reply.send(admin);
 });
 
-
-fastify.post('/admin', {schema} , async (request, reply) => {
+fastify.put('/admin/:id', { schema: adminValidators.addSchema } , async (request, reply) => {
   let admin = await collection.insertOne(request.body);
   reply.send(admin);
 });
 
 }
-
-
-
-  
 
 module.exports = routes
 

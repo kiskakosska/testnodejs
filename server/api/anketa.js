@@ -1,5 +1,7 @@
 'use strict'
 
+const anketaValidators = require('../_validators/anketa');
+
 async function routes (fastify, options) {
   const database = fastify.mongo.db('db')
   const collection = database.collection('anketa')
@@ -29,44 +31,15 @@ fastify.get('/anketa/:id', async (request, reply) => {
 })
 
 
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     name: { type: 'string' },
-     fname: { type: 'string' },
-     lname: { type: 'string' },
-     type: { type: 'string'},
-     number: { type: 'number' },
-     login: { type: 'string' },
-     password: { type: 'string' },
-     isActive: { type: 'number' },
-     IsOnline: { type: 'number' },
-     email: { type: 'string' },
-     date: { type: 'number' },
-     rating: { type: 'number' },
-     avatar: { type: 'string' },
-     adress: { type: 'string' },
-     account: { type: 'number' },
-     orderAmount: { type: 'number' }
-    },
-    required: ['name'],
-    required: ['fname'],
-    required: ['lname'],
-    required: ['number'],
-    required: ['login'],
-    required: ['email'],
-    required: ['adress'],
-    required: ['type']
-  }
-});
-
-
-fastify.post('/anketa', {schema} , async (request, reply) => {
+fastify.post('/anketa', { schema: anketaValidators.addSchema } , async (request, reply) => {
   let anketa = await collection.insertOne(request.body);
   reply.send(anketa);
 });
 
+fastify.put('/anketa/:id', { schema: anketaValidators.addSchema } , async (request, reply) => {
+  let anketa = await collection.insertOne(request.body);
+  reply.send(anketa);
+});
 }
 
 

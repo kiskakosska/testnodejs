@@ -29,17 +29,6 @@ fastify.get('/currency/:id', async (request, reply) => {
 })
 
 
-const schema = ({
-  body: {
-    type: 'object',
-    properties: {
-     name: { type: 'string' },
-     params_1: { type: 'string' },
-     params_2: { type: 'string' }
-    },
-    required: ['name']
-  }
-});
 
 
 fastify.post('/currency', {schema} , async (request, reply) => {
@@ -78,18 +67,6 @@ async function routes (fastify, options) {
   })
   
   
-  const schema = ({
-    body: {
-      type: 'object',
-      properties: {
-       description: { type: 'string' },
-       photo: { type: 'string' },
-       time: { type: 'number' },
-       ip: { type: 'number' }
-      },
-      required: ['description']
-    }
-  });
   
   
   fastify.post('/review', {schema} , async (request, reply) => {
@@ -127,32 +104,6 @@ async function routes (fastify, options) {
         
         )
   })
-  
-  
-  const schema = ({
-    body: {
-        type: 'object',
-        properties: {
-         name: { type: 'string' },
-         fname: { type: 'string' },
-         lname: { type: 'string' },
-         number: { type: 'number' },
-         login: { type: 'string' },
-         password: { type: 'string' },
-         isActive: { type: 'boolean' },
-         IsOnline: { type: 'boolean' },
-         email: { type: 'string' },
-         date: { type: 'number' },
-         rules: { type: 'number' }
-        },
-        required: ['name'],
-        required: ['fname'],
-        required: ['lname'],
-        required: ['number'],
-        required: ['login'],
-        required: ['email']
-    }
-  });
   
   
   fastify.post('/tarifs', {schema} , async (request, reply) => {
