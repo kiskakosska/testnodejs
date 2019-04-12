@@ -16,6 +16,7 @@ async function routes(fastify, options) {
     });
   });
 
+
   fastify.get('/clients/:id', async (request, reply) => {
     const result = await module.Client.findOne({ _id: request.params.id }, function (err, doc) {
       if (doc === null) {

@@ -1,41 +1,41 @@
-'use strict'
+'use strict';
 
-async function routes (fastify, options) {
-  const database = fastify.mongo.db('db')
-  const collection = database.collection('offers')
+const offerValidators = require('../_validators/offer');
 
-  
-  fastify.get('/offers', async (request, reply) => {
-    const result = collection.find().toArray(function(err, results){
+async function routes(fastify, options) {
+
+  let models = require('../../database');
+
+  fastify.get('/offer', async (request, reply) => {
+    const result = models.Offer.find(function (err, results) {
       if (results === null) {
         throw new Error('Invalid value')
       }
-    console.log(results)
-    reply.send(results);
-  }
-)})
+      console.log(results)
+      reply.send(results);
+    });
+  });
 
-
-fastify.get('/offers/:id', async (request, reply) => {
-    const result = await collection.findOne({ id: request.params.id } , function(err, doc) {
+  fastify.get('/offer/:id', async (request, reply) => {
+    const result = await module.Offer.findOne({ _id: request.params.id }, function (err, doc) {
       if (doc === null) {
         throw new Error('Invalid value')
       }
       console.log(doc)
       reply.send(doc);
-    }
-      
-      )
-})
+    });
+  });
 
 
+  fastify.post('/offer', { schema: offerValidators.addSchema }, async (request, reply) => {
+    let offer = await collection.insertOne(request.body);
+    reply.send(offer);
+  });
 
-fastify.post('/offers', {schema} , async (request, reply) => {
-  let offers = await collection.insertOne(request.body);
-  reply.send(offers);
-});
-
+  fastify.put('/offer/:id', { schema: offerValidators.addSchema }, async (request, reply) => {
+    let offer = await collection.insertOne(request.body);
+    reply.send(offer);
+  });
 }
 
-module.exports = routes
-
+module.exports = routes;
